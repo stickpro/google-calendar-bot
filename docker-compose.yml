@@ -1,0 +1,13 @@
+version: '3.5'
+
+services:
+  event-bot:
+    image: event-bot
+    container_name: event-bot
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8091:8091
+    volumes:
+      - ./.bin/:/app/
