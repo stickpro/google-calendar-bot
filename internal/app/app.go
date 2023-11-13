@@ -126,7 +126,7 @@ func Run() {
 						log.Printf("Error getting chat_id: %v", err)
 						continue
 					}
-					msg := tgbotapi.NewMessage(int64(chatID), fmt.Sprintf("Upcoming Event: %s - %s", event.Summary, event.Description))
+					msg := tgbotapi.NewMessage(int64(chatID), fmt.Sprintf("Тема: %s - %s", event.Summary, removeFirstWord(event.Description)))
 					_, err = bot.Send(msg)
 					if err != nil {
 						log.Printf("Telegram notification failed: %v", err)
@@ -208,6 +208,14 @@ func extractUsernameFromDescription(description string) string {
 	words := strings.Fields(description)
 	if len(words) > 0 {
 		return words[0]
+	}
+	return ""
+}
+
+func removeFirstWord(input string) string {
+	index := strings.Index(input, " ")
+	if index != -1 {
+		return input[index+1:]
 	}
 	return ""
 }
